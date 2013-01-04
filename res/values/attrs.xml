@@ -31,6 +31,7 @@
         <attr name="redlineColor" format="reference|color" />
         <attr name="hOffsetAdjustment" format="reference|float" />
         <attr name="tailLength" format="reference|float" />
+        <attr name="titleTextScaleX" format="reference|float" />
         <attr name="drawRim" format="boolean" />
         <attr name="drawFace" format="boolean" />
         <attr name="drawScale" format="boolean" />

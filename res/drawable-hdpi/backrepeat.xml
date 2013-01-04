@@ -16,13 +16,13 @@
                 android:type="radial" />
         </shape>
     </item>
-    <item android:bottom="100dp">
+    <item android:top="20dp">
         <bitmap
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:dither="true"
+            
             android:src="@drawable/wikispeed_shield_orange_120"
             android:tileMode="disabled"
-            android:gravity="center_horizontal|bottom"
+            android:gravity="center_horizontal|top"
              />
     </item>
 </layer-list>

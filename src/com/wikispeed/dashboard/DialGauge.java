@@ -114,6 +114,8 @@ public class DialGauge extends View {
 	
 	private float tailLength;
 	
+	private float titleTextScaleX;
+	
 	private boolean drawRim = true;
 	
 	private boolean drawFace = true;
@@ -191,6 +193,7 @@ public class DialGauge extends View {
 		drawFace = a.getBoolean(R.styleable.DialGauge_drawFace, true);
 		drawScale = a.getBoolean(R.styleable.DialGauge_drawScale, true);
 		tailLength = a.getFloat(R.styleable.DialGauge_tailLength, 0.2f);
+		titleTextScaleX = a.getFloat(R.styleable.DialGauge_titleTextScaleX, 1.0f);
 		a.recycle();
 	}
 
@@ -404,13 +407,14 @@ public class DialGauge extends View {
 		titlePaint.setColor(resources
 				.getColor(android.R.color.holo_blue_bright));
 		titlePaint.setAntiAlias(true);
-		titlePaint.setTypeface(Typeface.SANS_SERIF);
+		titlePaint.setTypeface(Typeface.DEFAULT);
 		titlePaint.setTextAlign(Paint.Align.CENTER);
 		titlePaint.setTextSize(0.08f);
-		//titlePaint.setTextScaleX(0.8f);
+		//titlePaint.setTextScaleX(1.0f);
+		titlePaint.setTextScaleX(titleTextScaleX);
 		// set linear text flag to true otherwise only one character
 		// is rendered on Jelly Bean
-		titlePaint.setFlags( titlePaint.getFlags() | Paint.LINEAR_TEXT_FLAG);
+		titlePaint.setFlags( titlePaint.getFlags() | Paint.LINEAR_TEXT_FLAG | Paint.DEV_KERN_TEXT_FLAG);
 
 		titlePath = new Path();
 		// use -180.0f for title at bottom of dial
