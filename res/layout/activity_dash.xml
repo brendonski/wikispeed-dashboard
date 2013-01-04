@@ -1,0 +1,104 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:gauge="http://schemas.android.com/apk/res/com.wikispeed.dashboard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backrepeat"
+    tools:context=".DashActivity" >
+
+  	<RelativeLayout
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true" >
+
+        <com.wikispeed.dashboard.DialGauge
+            android:id="@+id/speedmeter"
+            android:layout_alignParentLeft="true"
+            android:layout_width="450dp"
+            android:layout_height="450dp"
+            android:layout_marginLeft="5dp"
+            gauge:title="MPH"
+            gauge:numberOfNotches="120"
+            gauge:scaleEndAngle="135.0"
+            gauge:scaleSweepAngle="270.0"
+            gauge:notchLength="0.02"
+            gauge:majorNotchLength="0.03"
+            gauge:majorNotchInterval="10"
+            gauge:scaleOffset="0.10"
+            gauge:scaleRadius="0.37"
+             />
+        
+        <com.wikispeed.dashboard.DialGauge
+            android:id="@+id/tachometer"
+            android:layout_alignParentRight="true"
+            android:layout_width="450dp"
+            android:layout_height="450dp"
+            android:layout_marginRight="5dp"
+            gauge:title="RPM"
+            gauge:numberOfNotches="120"
+            gauge:scaleDivider="10"
+            gauge:scaleEndAngle="135.0"
+            gauge:scaleSweepAngle="270.0"
+            gauge:notchLength="0.02"
+            gauge:majorNotchLength="0.03"
+            gauge:majorNotchInterval="10"
+            gauge:scaleOffset="0.10"
+            gauge:scaleRadius="0.37"
+            gauge:redlineNotch="80"
+             />
+        
+        <com.wikispeed.dashboard.DialGauge
+            android:id="@+id/fuelGauge"
+            android:layout_marginLeft="115dp"
+            android:layout_marginTop="300dp"
+            android:layout_width="230dp"
+            android:layout_height="230dp"
+            gauge:numberOfNotches="100"
+            gauge:scaleEndAngle="67.5"
+            gauge:scaleSweepAngle="135.0"
+            gauge:notchLength="0.00"
+            gauge:notchStrokeWidth="0.02"
+            gauge:majorNotchLength="0.03"
+            gauge:majorNotchStrokeWidth="0.02"
+            gauge:majorNotchInterval="25"
+            gauge:majorNotchLabels="E,1/4,1/2,3/4,F"
+            gauge:scaleOffset="0.15"
+            gauge:scaleRadius="0.32"
+            gauge:scaleStrokeWidth="0.01"
+            gauge:scaleLabelTextSize="0.08"
+            gauge:hOffsetAdjustment="1.445"
+            gauge:tailLength="0"
+            gauge:drawRim="false"
+            gauge:drawFace="false"
+            gauge:drawScale="false"
+             />
+        
+        </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true" >
+
+        <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="?buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent" >
+
+            <Button
+                android:id="@+id/dummy_button"
+                style="?buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dummy_button" />
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>

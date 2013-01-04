@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Blue" parent="android:Theme">
+        <item name="scaleEndAngle">135.0</item>
+        <item name="scaleSweepAngle">270.0</item>
+        <item name="notchLength">0.02</item>
+        <item name="majorNotchLength">0.03</item>
+        <item name="scaleOffset">0.1</item>
+        <item name="scaleRadius">0.37</item>
+    </style>
+
+</resources>

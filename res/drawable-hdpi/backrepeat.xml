@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item>
+        <bitmap
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:dither="true"
+            android:src="@drawable/carbon_xsmall_tile"
+            android:tileMode="repeat" />
+    </item>
+    <item>
+        <shape>
+            <gradient
+                android:gradientRadius="700"
+                android:startColor="#2000"
+                android:endColor="#b000"
+                android:type="radial" />
+        </shape>
+    </item>
+    <item android:bottom="100dp">
+        <bitmap
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:dither="true"
+            android:src="@drawable/wikispeed_shield_orange_120"
+            android:tileMode="disabled"
+            android:gravity="center_horizontal|bottom"
+             />
+    </item>
+</layer-list>

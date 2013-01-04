@@ -1,0 +1,39 @@
+<resources>
+
+    <!--
+         Declare custom theme attributes that allow changing which styles are
+         used for button bars depending on the API level.
+         ?android:attr/buttonBarStyle is new as of API 11 so this is
+         necessary to support previous API levels.
+    -->
+    <declare-styleable name="ButtonBarContainerTheme">
+        <attr name="buttonBarStyle" format="reference" />
+        <attr name="buttonBarButtonStyle" format="reference" />
+    </declare-styleable>
+    
+    <declare-styleable name="DialGauge">
+        <attr name="title" format="reference|string" />
+        <attr name="numberOfNotches" format="reference|integer" />
+        <attr name="scaleDivider" format="reference|integer" />
+        <attr name="scaleEndAngle" format="reference|float" />
+        <attr name="scaleSweepAngle" format="reference|float" />
+        <attr name="notchLength" format="reference|float" />
+        <attr name="notchStrokeWidth" format="reference|float" />
+        <attr name="majorNotchLength" format="reference|float" />
+        <attr name="majorNotchStrokeWidth" format="reference|float" />
+        <attr name="majorNotchInterval" format="reference|integer" />
+        <attr name="majorNotchLabels" format="reference|string" />
+        <attr name="scaleOffset" format="reference|float" />
+        <attr name="scaleRadius" format="reference|float" />
+        <attr name="scaleStrokeWidth" format="reference|float" />
+        <attr name="scaleLabelTextSize" format="reference|float" />
+        <attr name="redlineNotch" format="reference|integer" />
+        <attr name="redlineColor" format="reference|color" />
+        <attr name="hOffsetAdjustment" format="reference|float" />
+        <attr name="tailLength" format="reference|float" />
+        <attr name="drawRim" format="boolean" />
+        <attr name="drawFace" format="boolean" />
+        <attr name="drawScale" format="boolean" />
+    </declare-styleable>
+
+</resources>
