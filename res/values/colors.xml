@@ -3,4 +3,5 @@
     <color name="black_overlay">#66000000</color>
 	<color name="neon_blue">#FF67C8FF</color>
 	<color name="bright_orange">#FFFF8000</color>
+	<color name="red">#FFFF0000</color>
 </resources>

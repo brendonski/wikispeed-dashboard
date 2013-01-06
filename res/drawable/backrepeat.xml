@@ -19,8 +19,7 @@
     <item android:top="20dp">
         <bitmap
             xmlns:android="http://schemas.android.com/apk/res/android"
-            
-            android:src="@drawable/wikispeed_shield_orange_120"
+            android:src="@drawable/wikispeed_shield_orange"
             android:tileMode="disabled"
             android:gravity="center_horizontal|top"
              />

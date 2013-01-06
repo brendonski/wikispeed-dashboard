@@ -184,7 +184,7 @@ public class DialGauge extends View {
 				270.0f);
 		redlineNotch = a.getInteger(R.styleable.DialGauge_redlineNotch, 0);
 		redlineColor = a.getColor(R.styleable.DialGauge_redlineColor,
-				android.R.color.holo_red_light);
+				R.color.red);
 
 		angleBetweenNotch = scaleSweepAngle / numberOfNotches;
 
@@ -346,7 +346,7 @@ public class DialGauge extends View {
 		scalePaint.setStyle(Paint.Style.STROKE);
 		// TODO get color from preferences
 		scalePaint.setColor(resources
-				.getColor(android.R.color.holo_blue_bright));
+				.getColor(R.color.neon_blue));
 		scalePaint.setStrokeWidth(scaleStrokeWidth);
 		scalePaint.setAntiAlias(true);
 
@@ -354,7 +354,7 @@ public class DialGauge extends View {
 		scaleLabelPaint.setStyle(Paint.Style.FILL);
 		// TODO get color from preferences
 		scaleLabelPaint.setColor(resources
-				.getColor(android.R.color.holo_blue_bright));
+				.getColor(R.color.neon_blue));
 		scaleLabelPaint.setAntiAlias(true);
 		// TODO get text size from preferences
 		//scaleLabelPaint.setTextSize(0.040f);
@@ -383,7 +383,7 @@ public class DialGauge extends View {
 		notchPaint.setStyle(Paint.Style.STROKE);
 		// TODO get notch color from preferences
 		notchPaint.setColor(resources
-				.getColor(android.R.color.holo_blue_bright));
+				.getColor(R.color.neon_blue));
 		// TODO get notch width from preferences
 		//notchPaint.setStrokeWidth(0.005f);
 		notchPaint.setStrokeWidth(notchStrokeWidth);
@@ -393,7 +393,7 @@ public class DialGauge extends View {
 		majorNotchPaint.setStyle(Paint.Style.STROKE);
 		// TODO get notch color from preferences
 		majorNotchPaint.setColor(resources
-				.getColor(android.R.color.holo_orange_dark));
+				.getColor(R.color.bright_orange));
 		// TODO get notch width from preferences
 		//majorNotchPaint.setStrokeWidth(0.006f);
 		majorNotchPaint.setStrokeWidth(majorNotchStrokeWidth);
@@ -405,7 +405,7 @@ public class DialGauge extends View {
 
 		titlePaint = new Paint();
 		titlePaint.setColor(resources
-				.getColor(android.R.color.holo_blue_bright));
+				.getColor(R.color.neon_blue));
 		titlePaint.setAntiAlias(true);
 		titlePaint.setTypeface(Typeface.DEFAULT);
 		titlePaint.setTextAlign(Paint.Align.CENTER);

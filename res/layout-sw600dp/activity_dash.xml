@@ -15,8 +15,8 @@
         <com.wikispeed.dashboard.DialGauge
             android:id="@+id/speedmeter"
             android:layout_alignParentLeft="true"
-            android:layout_width="370dp"
-            android:layout_height="370dp"
+            android:layout_width="450dp"
+            android:layout_height="450dp"
             android:layout_marginLeft="5dp"
             gauge:title="MPH"
             gauge:numberOfNotches="120"
@@ -32,8 +32,8 @@
         <com.wikispeed.dashboard.DialGauge
             android:id="@+id/tachometer"
             android:layout_alignParentRight="true"
-            android:layout_width="370dp"
-            android:layout_height="370dp"
+            android:layout_width="450dp"
+            android:layout_height="450dp"
             android:layout_marginRight="5dp"
             gauge:title="RPM"
             gauge:numberOfNotches="120"
@@ -50,10 +50,10 @@
         
         <com.wikispeed.dashboard.DialGauge
             android:id="@+id/fuelGauge"
-            android:layout_marginLeft="90dp"
-            android:layout_marginTop="240dp"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_marginLeft="115dp"
+            android:layout_marginTop="300dp"
+            android:layout_width="230dp"
+            android:layout_height="230dp"
             gauge:title="Fuel"
             gauge:titleTextScaleX="1.2"
             gauge:numberOfNotches="100"
@@ -78,11 +78,11 @@
 
         <com.wikispeed.dashboard.DialGauge
             android:id="@+id/tempGauge"
-            android:layout_marginRight="90dp"
+            android:layout_marginRight="115dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="240dp"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_marginTop="300dp"
+            android:layout_width="230dp"
+            android:layout_height="230dp"
             gauge:title="Temp &#176;F"
             gauge:titleTextScaleX="1.2"
             gauge:numberOfNotches="120"
