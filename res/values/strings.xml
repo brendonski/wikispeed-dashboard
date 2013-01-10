@@ -4,5 +4,9 @@
     <string name="app_name">Dashboard</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="dummy_button">Dummy Button</string>
+    <string name="local_service_started">Service started</string>
+    <string name="local_service_stopped">Service stopped</string>
+    <string name="local_service_connected">Connected to service</string>
+    <string name="local_service_disconnected">Disconnected from service</string>
 
 </resources>
