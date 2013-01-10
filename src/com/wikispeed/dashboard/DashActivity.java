@@ -140,7 +140,7 @@ public class DashActivity extends Activity {
         public void onReceive(Context context, Intent intent) {
             // intent can contain anydata
             Log.d(TAG,"onReceive called");
-            
+            processExtras(intent.getExtras());
         }
     };
 	
@@ -148,6 +148,53 @@ public class DashActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		 LocalBroadcastManager.getInstance(this).unregisterReceiver(onNotice);
+	}
+
+	protected void processExtras(Bundle extras) {
+		if (extras.getBoolean("gauges")) {
+			processGauges(extras);
+		} else if (extras.getBoolean("lights")) {
+			processLights(extras);
+		} else if (extras.getBoolean("indicators")) {
+			processIndicators(extras);
+		} 
+	}
+
+	private void processIndicators(Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void processLights(Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void processGauges(Bundle extras) {
+		setSpeed(extras.getInt(DataService.MPH));
+		setRevs(extras.getInt(DataService.RPM));
+		setFuel(extras.getInt(DataService.GAS));
+		setTemp(extras.getInt(DataService.OILT));
+	}
+
+	private void setTemp(int int1) {
+		DialGauge temp = (DialGauge) findViewById(R.id.tempGauge);
+		temp.setHandTarget(int1);
+	}
+
+	private void setFuel(int int1) {
+		DialGauge fuel = (DialGauge) findViewById(R.id.fuelGauge);
+		fuel.setHandTarget(int1);
+	}
+
+	private void setRevs(int int1) {
+		DialGauge tach = (DialGauge) findViewById(R.id.tachometer);
+		tach.setHandTarget(int1);
+	}
+
+	private void setSpeed(int int1) {
+		DialGauge speed = (DialGauge) findViewById(R.id.speedmeter);
+		speed.setHandTarget(int1);
 	}
 
 	@Override

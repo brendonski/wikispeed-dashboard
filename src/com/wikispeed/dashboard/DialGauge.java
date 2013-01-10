@@ -200,14 +200,12 @@ public class DialGauge extends View {
 	@Override
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
-		attachToSensor();
 		// start off at zero
 		setHandTarget(0.0f);
 	}
 
 	@Override
 	protected void onDetachedFromWindow() {
-		detachFromSensor();
 		super.onDetachedFromWindow();
 	}
 	
@@ -238,53 +236,6 @@ public class DialGauge extends View {
 		state.putFloat("handAcceleration", handAcceleration);
 		state.putLong("lastHandMoveTime", lastHandMoveTime);
 		return state;
-	}
-	
-	private void attachToSensor() {
-		running = false;
-		// simulate a sensor
-		Runnable runnable = new Runnable() {
-		      @Override
-		      public void run() {
-		        while (running) {
-		          final int value = (int) Math.abs(Math.random() * numberOfNotches);
-		          Log.d(TAG, "random value " + value);
-		          try {
-		            Thread.sleep(2000);
-		          } catch (InterruptedException e) {
-		            e.printStackTrace();
-		          }
-		          handler.post(new Runnable() {
-		            @Override
-		            public void run() {
-		              setHandTarget(value);
-		            }
-		          });
-		        }
-		      }
-		    };
-		    new Thread(runnable).start();
-		
-		
-		/*SensorManager sensorManager = getSensorManager();
-
-		List<Sensor> sensors = sensorManager
-				.getSensorList(Sensor.TYPE_GRAVITY);
-		if (sensors.size() > 0) {
-			Sensor sensor = sensors.get(0);
-			sensorManager.registerListener(this, sensor,
-					SensorManager.SENSOR_DELAY_UI, handler);
-		} else {
-			Log.e(TAG, "No sensor found");
-		}*/
-	}
-
-	private void detachFromSensor() {
-		
-		running = false;
-		
-		/*SensorManager sensorManager = getSensorManager();
-		sensorManager.unregisterListener(this);*/
 	}
 	
 	private void init() {
@@ -703,7 +654,7 @@ public class DialGauge extends View {
 		}
 	}
 	
-	private void setHandTarget(float temperature) {
+	public void setHandTarget(float temperature) {
 		if (temperature < minDegrees) {
 			temperature = minDegrees;
 		} else if (temperature > numberOfNotches) {
