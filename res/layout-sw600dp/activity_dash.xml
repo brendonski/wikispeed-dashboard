@@ -10,7 +10,8 @@
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:keepScreenOn="true" >
+        android:keepScreenOn="true"
+        >
 
         <com.wikispeed.dashboard.DialGauge
             android:id="@+id/speedmeter"
@@ -104,8 +105,49 @@
             gauge:drawScale="false"
              />
 
+        	<LinearLayout 
+  	    		android:id="@+id/indicators"
+  	    		android:layout_width="match_parent"
+        		android:layout_height="match_parent"
+        		android:layout_gravity="bottom"
+        		android:layout_below="@+id/speedmeter"
+  	    		>
+  	    		<TextView android:id="@+id/battery_volts" 
+  	        		android:layout_width="180dp"
+            		android:layout_height="40dp"
+            		android:textSize="20sp"
+  	        		android:text="@string/bat_volts" />
+
+  	    		<TextView android:id="@+id/oil_pressure" 
+  	        		android:layout_width="180dp"
+            		android:layout_height="40dp"
+  	        		android:textSize="20sp"
+  	        		android:text="@string/oil_press" />
+
+  	    		<TextView android:id="@+id/oil_temp" 
+  	        		android:layout_width="180dp"
+            		android:layout_height="40dp"
+  	        		android:textSize="20sp"
+  	        		android:text="@string/oil_temp" />
+  	    		
+  	    		<TextView android:id="@+id/engine_temp" 
+  	        		android:layout_width="180dp"
+            		android:layout_height="40dp"
+  	        		android:textSize="20sp"
+  	        		android:text="@string/engine_temp" />
+
+  	    		<TextView android:id="@+id/trans_temp" 
+  	        		android:layout_width="200dp"
+            		android:layout_height="40dp"
+  	        		android:textSize="20sp"
+  	        		android:text="@string/trans_temp" />
+  	    			    			    			    	        
+  			</LinearLayout>
+        
         </RelativeLayout>
 
+  	
+  	
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

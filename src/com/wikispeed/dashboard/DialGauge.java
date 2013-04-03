@@ -2,7 +2,6 @@ package com.wikispeed.dashboard;
 
 import java.util.StringTokenizer;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -26,7 +25,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.animation.LinearInterpolator;
 
 public class DialGauge extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -485,7 +483,7 @@ public class DialGauge extends SurfaceView implements SurfaceHolder.Callback {
 	private void drawHand(Canvas canvas) {
 		if (handInitialized) {
 			float handAngle = degreeToAngle(handPosition);
-			Log.d(TAG, "handAngle = " + handAngle);
+			//Log.d(TAG, "handAngle = " + handAngle);
 			canvas.save(Canvas.MATRIX_SAVE_FLAG);
 			canvas.rotate(360f - scaleEndAngle + handAngle, 0.5f, 0.5f);
 			canvas.drawPath(handPath, handPaint);
@@ -560,7 +558,7 @@ public class DialGauge extends SurfaceView implements SurfaceHolder.Callback {
 				mp = redlineMajorNotchPaint;
 			}
 			if (majorNotchInterval > 0 && i % majorNotchInterval == 0) {
-				Log.d(TAG, "drawing major notch " + i);
+				//Log.d(TAG, "drawing major notch " + i);
 				// draw a major notch
 				canvas.drawLine(0.5f, y1, 0.5f, y3, mp);
 				// draw the major label
@@ -574,8 +572,8 @@ public class DialGauge extends SurfaceView implements SurfaceHolder.Callback {
 				// float x = measureText/2.0f;
 				float hOffset = (float) (measureText * scaleRadius
 						* (2 * Math.PI) / numberOfNotches);
-				Log.d(TAG, "angleBetweenNotches: " + angleBetweenNotch
-						+ ", hOffset for " + i + " = " + hOffset);
+				//Log.d(TAG, "angleBetweenNotches: " + angleBetweenNotch
+				//		+ ", hOffset for " + i + " = " + hOffset);
 				// -x makes text center on length to line up with notches
 				// TODO - why does 1.695f work for hOffset? (works for radius
 				// 0.37f)
@@ -583,7 +581,7 @@ public class DialGauge extends SurfaceView implements SurfaceHolder.Callback {
 				canvas.drawTextOnPath(label, scaleLabelPath,
 						hOffsetAdjustment - hOffset / 2, -0.05f, scaleLabelPaint);
 			} else {
-				Log.d(TAG, "drawing notch " + i);
+				//Log.d(TAG, "drawing notch " + i);
 				// draw a notch
 				canvas.drawLine(0.5f, y1, 0.5f, y2, np);
 			}

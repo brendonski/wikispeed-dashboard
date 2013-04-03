@@ -19,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wikispeed.dashboard.service.DataService;
@@ -203,7 +204,13 @@ public class DashActivity extends Activity {
 		setSpeed(extras.getInt(DataService.MPH));
 		setRevs(extras.getInt(DataService.RPM));
 		setFuel(extras.getInt(DataService.GAS));
-		setTemp(extras.getInt(DataService.OILT));
+		setTemp(extras.getInt(DataService.ECT));
+		setBatteryCharge(extras.getFloat(DataService.BAT));
+		setOilPressure(extras.getInt(DataService.OILP));
+		setOilTemp(extras.getInt(DataService.OILT));
+		setEngineTemp(extras.getInt(DataService.ECT));
+		setTransTemp(extras.getInt(DataService.TFT));
+		
 	}
 
 	private void setTemp(int int1) {
@@ -231,6 +238,41 @@ public class DashActivity extends Activity {
 		DialGauge speed = (DialGauge) findViewById(R.id.speedmeter);
 		if (speed != null) {
 			speed.setHandTarget(int1);
+		}
+	}
+
+	private void setBatteryCharge(float int1) {
+		TextView tv = (TextView) findViewById(R.id.battery_volts);
+		if (tv != null) {
+			tv.setText(getString(R.string.bat_volts) + int1);
+		}
+	}
+
+	private void setOilPressure(int int1) {
+		TextView tv = (TextView) findViewById(R.id.oil_pressure);
+		if (tv != null) {
+			tv.setText(getString(R.string.oil_press) + int1);
+		}
+	}
+
+	private void setOilTemp(int int1) {
+		TextView tv = (TextView) findViewById(R.id.oil_temp);
+		if (tv != null) {
+			tv.setText(getString(R.string.oil_temp) + int1);
+		}
+	}
+
+	private void setEngineTemp(int int1) {
+		TextView tv = (TextView) findViewById(R.id.engine_temp);
+		if (tv != null) {
+			tv.setText(getString(R.string.engine_temp) + int1);
+		}
+	}
+
+	private void setTransTemp(int int1) {
+		TextView tv = (TextView) findViewById(R.id.trans_temp);
+		if (tv != null) {
+			tv.setText(getString(R.string.trans_temp) + int1);
 		}
 	}
 

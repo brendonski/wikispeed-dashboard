@@ -8,5 +8,10 @@
     <string name="local_service_stopped">Service stopped</string>
     <string name="local_service_connected">Connected to service</string>
     <string name="local_service_disconnected">Disconnected from service</string>
+    <string name="oil_temp">Oil Temp:</string>
+    <string name="oil_press">Oil Press:</string>
+    <string name="engine_temp">Engine Temp:</string>
+    <string name="trans_temp">Trans Temp:</string>
+    <string name="bat_volts">Bat Volts:</string>
 
 </resources>
