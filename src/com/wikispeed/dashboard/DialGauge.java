@@ -2,6 +2,7 @@ package com.wikispeed.dashboard;
 
 import java.util.StringTokenizer;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -23,12 +24,16 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.animation.LinearInterpolator;
 
-public class DialGauge extends View {
+public class DialGauge extends SurfaceView implements SurfaceHolder.Callback {
 
 	private static final String TAG = "CanvasView";
 
+	private DrawThread drawThread;
+	
 	private Handler handler;
 
 	private Bitmap background; // holds the cached static part
@@ -239,6 +244,9 @@ public class DialGauge extends View {
 	}
 	
 	private void init() {
+		
+		getHolder().addCallback(this);
+		
 		handler = new Handler();
 
 		initDrawingTools();
@@ -436,35 +444,28 @@ public class DialGauge extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		drawBackground(canvas);
+		if (canvas != null) {
+			drawBackground(canvas);
 
-		float scale = (float) getWidth();
-		canvas.save(Canvas.MATRIX_SAVE_FLAG);
-		canvas.scale(scale, scale);
+			float scale = (float) getWidth();
+			canvas.save(Canvas.MATRIX_SAVE_FLAG);
+			canvas.scale(scale, scale);
 
-		// drawLogo(canvas);
-		drawHand(canvas);
+			// drawLogo(canvas);
+			drawHand(canvas);
 
-		canvas.restore();
-
-		if (handNeedsToMove()) {
-			moveHand();
+			canvas.restore();
 		}
+
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		Log.d(TAG, "Size changed to " + w + "x" + h);
-
 		regenerateBackground();
 	}
 
 	private void regenerateBackground() {
-		// free the old bitmap
-		if (background != null) {
-			background.recycle();
-		}
-
 		background = Bitmap.createBitmap(getWidth(), getHeight(),
 				Bitmap.Config.ARGB_8888);
 		Canvas backgroundCanvas = new Canvas(background);
@@ -495,7 +496,6 @@ public class DialGauge extends View {
 	}
 	
 	private float degreeToAngle(float degree) {
-		//return (degree - centerDegree) / 2.0f * degreesPerNick;
 		return degree * angleBetweenNotch;
 	}
 	
@@ -503,7 +503,9 @@ public class DialGauge extends View {
 		if (background == null) {
 			Log.w(TAG, "Background not created");
 		} else {
-			canvas.drawBitmap(background, 0, 0, backgroundPaint);
+			if (canvas != null) {
+				canvas.drawBitmap(background, 0, 0, backgroundPaint);
+			}
 		}
 	}
 
@@ -623,35 +625,19 @@ public class DialGauge extends View {
 	}
 
 	private void moveHand() {
-		if (!handNeedsToMove()) {
-			return;
-		}
-
-		if (lastHandMoveTime != -1L) {
-			long currentTime = System.currentTimeMillis();
-			float delta = (currentTime - lastHandMoveTime) / 1000.0f;
-
-			float direction = Math.signum(handVelocity);
-			if (Math.abs(handVelocity) < 90.0f) {
-				handAcceleration = 5.0f * (handTarget - handPosition);
-			} else {
-				handAcceleration = 0.0f;
-			}
-			handPosition += handVelocity * delta;
-			handVelocity += handAcceleration * delta;
-			if ((handTarget - handPosition) * direction < 0.01f * direction) {
-				handPosition = handTarget;
-				handVelocity = 0.0f;
-				handAcceleration = 0.0f;
-				lastHandMoveTime = -1L;
-			} else {
-				lastHandMoveTime = System.currentTimeMillis();
-			}
-			invalidate();
-		} else {
-			lastHandMoveTime = System.currentTimeMillis();
-			moveHand();
-		}
+		// animator causes jerky screen updates so moving to value directly
+		//ValueAnimator animator = ValueAnimator.ofFloat(handPosition, handTarget);
+		//animator.setInterpolator(new LinearInterpolator());
+		//animator.setDuration(250);
+		//animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+		//    @Override
+		//    public void onAnimationUpdate(ValueAnimator animation) {
+		//            float value = ((Float) (animation.getAnimatedValue())).floatValue();
+		//            handPosition = value;
+		//    }
+		//});
+		//animator.start();
+		handPosition = handTarget;
 	}
 	
 	public void setHandTarget(float temperature) {
@@ -662,6 +648,73 @@ public class DialGauge extends View {
 		}
 		handTarget = temperature;
 		handInitialized = true;
+		
+		if (handNeedsToMove()) {
+			moveHand();
+		}
+		
 		invalidate();
 	}
+	
+	
+	
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+		onSizeChanged(width, height, 0, 0);
+	}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder holder) {
+		drawThread = new DrawThread(holder);
+		drawThread.setRunning(true);
+		drawThread.start();
+
+	}
+
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder) {
+	    boolean retry = true;
+	    drawThread.setRunning(false);
+	    while (retry) {
+	        try {
+	            drawThread.join();
+	            retry = false;
+	        } catch (InterruptedException e) {
+	            // we will try it again and again...
+	        }
+	    }
+	}
+
+	class DrawThread extends Thread {
+	    private SurfaceHolder surfaceHolder;
+	    private boolean running = false;
+
+	    public DrawThread(SurfaceHolder surfaceHolder){
+	    	this.surfaceHolder = surfaceHolder;
+	    }
+
+	    public void setRunning(boolean value){
+	    	running = value;
+	    }
+
+		@Override
+		public void run() {
+		    Canvas c;
+		    while (running) {
+		        c = null;
+		        try {
+		            c = surfaceHolder.lockCanvas(null);
+		            synchronized (surfaceHolder) {
+		                onDraw(c);
+		            }
+		        } finally {
+		            if (c != null) {
+		            	surfaceHolder.unlockCanvasAndPost(c);
+		            }
+		        }
+		    }		
+		}
+	}
+	
+	
 }

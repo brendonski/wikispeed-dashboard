@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,8 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
@@ -61,7 +64,10 @@ public class DashActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
+		// we're not going to see the default background so don't draw it
+		getWindow().setBackgroundDrawable(null);
+		
 		setContentView(R.layout.activity_dash);
 
 		final View controlsView = findViewById(R.id.fullscreen_content_controls);
@@ -124,17 +130,39 @@ public class DashActivity extends Activity {
 			}
 		});
 
+		// make gauges transparent
+		makeTransparent(findViewById(R.id.speedmeter));
+		makeTransparent(findViewById(R.id.tachometer));
+		makeTransparent(findViewById(R.id.fuelGauge));
+		makeTransparent(findViewById(R.id.tempGauge));
+				
 		// Upon interacting with UI controls, delay any scheduled hide()
 		// operations to prevent the jarring behavior of controls going away
 		// while interacting with the UI.
 		findViewById(R.id.dummy_button).setOnTouchListener(
 				mDelayHideTouchListener);
         
+		startDataService();
+	}
+
+	private void startDataService() {
 		Intent i = new Intent(this, DataService.class);
 		startService(i);
 	}
-	
-    private BroadcastReceiver onNotice= new BroadcastReceiver() {
+
+	private void stopDataService() {
+		Intent i = new Intent(this, DataService.class);
+		stopService(i);
+	}
+
+    private void makeTransparent(View findViewById) {
+		SurfaceView view = (SurfaceView) findViewById;
+		view.setZOrderOnTop(true);    // necessary
+		SurfaceHolder viewHolder = view.getHolder();
+		viewHolder.setFormat(PixelFormat.TRANSPARENT);
+	}
+
+	private BroadcastReceiver onNotice= new BroadcastReceiver() {
         
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -147,7 +175,8 @@ public class DashActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		 LocalBroadcastManager.getInstance(this).unregisterReceiver(onNotice);
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(onNotice);
+		stopDataService();
 	}
 
 	protected void processExtras(Bundle extras) {
@@ -179,22 +208,30 @@ public class DashActivity extends Activity {
 
 	private void setTemp(int int1) {
 		DialGauge temp = (DialGauge) findViewById(R.id.tempGauge);
-		temp.setHandTarget(int1);
+		if (temp != null) {
+			temp.setHandTarget(int1);
+		}
 	}
 
 	private void setFuel(int int1) {
 		DialGauge fuel = (DialGauge) findViewById(R.id.fuelGauge);
-		fuel.setHandTarget(int1);
+		if (fuel != null) {
+			fuel.setHandTarget(int1);
+		}
 	}
 
 	private void setRevs(int int1) {
 		DialGauge tach = (DialGauge) findViewById(R.id.tachometer);
-		tach.setHandTarget(int1);
+		if (tach != null) {
+			tach.setHandTarget(int1);
+		}
 	}
 
 	private void setSpeed(int int1) {
 		DialGauge speed = (DialGauge) findViewById(R.id.speedmeter);
-		speed.setHandTarget(int1);
+		if (speed != null) {
+			speed.setHandTarget(int1);
+		}
 	}
 
 	@Override
@@ -202,6 +239,7 @@ public class DashActivity extends Activity {
 		super.onResume();
 		IntentFilter iff= new IntentFilter(DataService.ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, iff);
+        startDataService();
 	}
 
 	@Override
@@ -295,5 +333,6 @@ public class DashActivity extends Activity {
 	protected void onDestroy() {
 	    super.onDestroy();
 	    doUnbindService();
+	    stopDataService();
 	}
 }

@@ -28,7 +28,7 @@
             gauge:scaleOffset="0.10"
             gauge:scaleRadius="0.37"
              />
-        
+      
         <com.wikispeed.dashboard.DialGauge
             android:id="@+id/tachometer"
             android:layout_alignParentRight="true"
@@ -103,7 +103,7 @@
             gauge:drawFace="false"
             gauge:drawScale="false"
              />
-        
+
         </RelativeLayout>
 
     <FrameLayout

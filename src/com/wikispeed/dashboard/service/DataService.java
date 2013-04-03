@@ -38,6 +38,8 @@ public class DataService extends Service {
     public static final String RPM = "RPM";
     public static final String MPH = "MPH";
 	
+    boolean running = true;
+    
     /**
      * Class for clients to access.  Because we know this service always
      * runs in the same process as its clients, we don't need to deal with
@@ -56,14 +58,15 @@ public class DataService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("LocalService", "Received start id " + startId + ": " + intent);
-        // We want this service to continue running until it is explicitly
-        // stopped, so return sticky.
-        return START_STICKY;
+        Log.i(TAG, "Received start id " + startId + ": " + intent);
+        // TODO In the future make this service sticky so we still receive notifications
+        // even if the dashboard is not running.
+        return START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy() {
+    	running = false;
         // Tell the user we stopped.
         Toast.makeText(this, R.string.local_service_stopped, Toast.LENGTH_SHORT).show();
     }
@@ -103,26 +106,27 @@ public class DataService extends Service {
 
 		@Override
 		protected String doInBackground(String... params) {
-			// TODO make stoppable
 			int speed = 0;
 			int rpm = 0;
 			int speedIncr = 1;
 			int rpmIncr = 2;
-			while (true) {
+			int speedMult = 1;
+			int rpmMult = 3;
+			while (running) {
 				try {
 					Log.d(TAG, "sending broadcast");
 					// simulate some movement
 					if (speed > 80) {
-						speedIncr = -1;
+						speedIncr = -1 * speedMult;
 					}
 					if (speed <= 0) {
-						speedIncr = 1;
+						speedIncr = 1 * speedMult;
 					}
 					if (rpm > 60) {
-						rpmIncr = -2;
+						rpmIncr = -1 * rpmMult;
 					}
 					if (rpm <= 8) {
-						rpmIncr = 2;
+						rpmIncr = 1 * rpmMult;
 					}
 					speed = speed + speedIncr;
 					rpm = rpm + rpmIncr;
@@ -130,13 +134,13 @@ public class DataService extends Service {
 					Intent in = getIntentFromDataLine(dataLine);
 					LocalBroadcastManager.getInstance(context)
 							.sendBroadcast(in);
-					Thread.sleep(250);
+					Thread.sleep(150);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-			//return null;
+			return null;
 		}
 
 		private Intent getIntentFromDataLine(String dataLine) {
